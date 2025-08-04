@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Token {
+  id          Int           @id @default(autoincrement())
+  address     String        @unique @db.VarChar(42)
+  creator     String
+  tokenURI    String
+  tvl         Float         @default(6000)
+  marketCap   Float         @default(6000)
+  createdAt   DateTime      @default(now())
+
+  transactions Transaction[]
+}
+
+model Transaction {
+  id           Int              @id @default(autoincrement())
+  token        Token            @relation(fields: [tokenAddress], references: [address])
+  tokenAddress String           @db.VarChar(42)
+  userAddress  String
+  type         TransactionType
+  amount       Float
+  valueUsd     Float
+  txHash       String          @db.VarChar(66)
+  createdAt    DateTime         @default(now())
+
+  @@index([tokenAddress])
+}
+
+enum TransactionType {
+  BUY
+  SELL
+  REWARD
+}
