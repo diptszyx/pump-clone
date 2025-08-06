@@ -1,12 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "🔍 Running pre-push checks..."
-
-echo "📝 Running all checks (type-check, lint, format)..."
-npm run check-all
-
-echo "🏗️ Building project..."
-npm run build
-
-echo "✅ All checks passed! Ready to push..."
+echo "🚀 Ready to push! (All checks were done at commit time)"
