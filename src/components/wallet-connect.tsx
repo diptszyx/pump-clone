@@ -1,6 +1,6 @@
 "use client";
 import { useAccount, useDisconnect, useBalance } from "wagmi";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/src/components/ui/8bit/button";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { type Address } from "viem";
 import {
@@ -49,10 +49,11 @@ export function WalletConnect() {
   if (!mounted) {
     return (
       <Button
-        variant="outline"
-        className="rounded-full bg-gray-800 border-gray-600 text-white hover:bg-gray-700"
+        variant="neon"
+        font="retro"
+        className="bg-gray-600 text-white hover:bg-gray-500"
       >
-        <div className="w-4 h-4 animate-pulse bg-gray-600 rounded-full mr-2" />
+        <div className="w-4 h-4 animate-pulse bg-gray-400 rounded-full mr-2" />
         Loading...
       </Button>
     );
@@ -61,7 +62,9 @@ export function WalletConnect() {
     return (
       <Button
         onClick={() => open()}
-        className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white"
+        variant="neon"
+        font="retro"
+        className="bg-emerald-600 text-white hover:bg-emerald-500 px-4 py-2 text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300"
       >
         <Wallet className="w-4 h-4 mr-2" />
         Connect Wallet
@@ -73,8 +76,9 @@ export function WalletConnect() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
-          className="rounded-full bg-gray-800 border-gray-600 text-white hover:bg-gray-700"
+          variant="neon"
+          font="retro"
+          className="bg-gray-700 text-white hover:bg-gray-600 px-3 py-2 text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300"
         >
           <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
           {address?.slice(0, 6)}...{address?.slice(-4)}
