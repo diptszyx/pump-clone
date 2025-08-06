@@ -11,13 +11,13 @@ export default function TokenInfo({ token }: { token: Token }) {
   return (
     <div className="bg-[#1a1d2e] rounded-2xl p-6 border border-gray-800/50 shadow-lg">
       <div className="flex items-center gap-4 mb-6">
-        <div className="relative">
+        <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-700/50 flex-shrink-0">
           <Image
             src={meta.image || "/placeholder.png"}
             alt={meta.name || "Token"}
-            width={80}
-            height={80}
-            className="rounded-full border-2 border-gray-700/50"
+            fill
+            className="object-cover"
+            sizes="80px"
           />
         </div>
         <div className="flex-1 min-w-0">

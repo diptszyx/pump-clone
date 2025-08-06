@@ -12,6 +12,17 @@ yarn dev
 pnpm dev
 # or
 bun dev
+
+Generate Prisma Client:
+
+pnpm db:generate
+
+If the error persists, reset and migrate the database again:
+
+pnpm db:reset
+pnpm db:migrate:dev
+
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

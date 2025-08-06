@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Badge } from "@/src/components/ui/badge";
-import { Button } from "@/src/components/ui/button";
+
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Globe, Send, Twitter } from "lucide-react";
 import { LoadingSpinner, Skeleton } from "@/src/components/ui/loading";
 import { socialUtils } from "@/src/utils/socialLinks";
 import { formatNumber } from "@/src/utils/format";
+import { Button } from "@/src/components/ui/8bit/button";
+import { cn } from "@/src/lib/utils";
+import { eightBitStyles } from "@/src/styles/8bit-styles";
 
 type TokenMetadata = {
   name: string;
@@ -79,7 +81,8 @@ export function TokenList() {
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="bg-[#1a202c] flex items-center justify-between p-6 rounded-2xl min-h-[100px]"
+            className="text-white flex items-center justify-between p-6 min-h-[100px]"
+            style={eightBitStyles.tokenCard}
           >
             <div className="flex items-center gap-4 flex-1">
               <Skeleton className="w-20 h-20 rounded-xl" />
@@ -123,21 +126,22 @@ export function TokenList() {
         <div className="col-span-2 text-center">Action</div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-6 px-4">
         {currentTokens.map((token) => (
           <div
             key={token.id}
-            className="bg-[#1a202c] rounded-2xl p-6 hover:bg-[#1e293b] transition-all"
+            className="text-white p-6 hover:brightness-110 transition-all cursor-pointer"
+            style={eightBitStyles.tokenCard}
           >
             <div className="hidden md:grid md:grid-cols-12 md:gap-4 md:items-center md:min-h-[88px]">
               <div className="col-span-5 flex items-center gap-4">
-                <div className="w-20 h-20 flex-shrink-0">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-700/50 flex-shrink-0">
                   <Image
                     src={token.metadata?.image || "/placeholder.png"}
                     alt={token.metadata?.name || "Token"}
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-cover rounded-xl"
+                    fill
+                    className="object-cover"
+                    sizes="80px"
                   />
                 </div>
 
@@ -188,7 +192,7 @@ export function TokenList() {
               </div>
 
               <div className="col-span-2 text-center">
-                <div className="text-white font-mono text-base">
+                <div className="text-white  text-base">
                   {token.creator.slice(0, 6)}...{token.creator.slice(-4)}
                 </div>
               </div>
@@ -197,13 +201,18 @@ export function TokenList() {
                   {formatTimeAgo(token.createdAt)}
                 </div>
               </div>
-              <div className="col-span-2 flex items-center justify-end gap-3">
-                <Badge className="bg-blue-500/10 text-blue-400 border-0 rounded-full text-sm">
-                  V3
-                </Badge>
+              <div className="col-span-2 flex flex-col items-center justify-center gap-2">
                 <Button
-                  className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-6 py-3 text-base font-semibold"
+                  size="lg"
+                  variant="neon"
+                  font="retro"
                   onClick={() => router.push(`/token/${token.address}`)}
+                  className={cn(
+                    "px-3 py-1.5 text-xs font-medium shadow-lg",
+                    "hover:shadow-xl transition-all duration-300",
+                    "bg-emerald-600 text-white hover:bg-emerald-500",
+                    "dark:bg-emerald-700 dark:hover:bg-emerald-600"
+                  )}
                 >
                   Buy
                 </Button>
@@ -241,12 +250,20 @@ export function TokenList() {
                       {formatTimeAgo(token.createdAt)}
                     </div>
                   </div>
-                  <Badge className="bg-blue-500/10 text-blue-400 border-0 rounded-full text-sm">
+                  {/* <Badge className="bg-blue-500/10 text-blue-400 border-0 rounded-full text-sm">
                     V3
-                  </Badge>
+                  </Badge> */}
                   <Button
-                    className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-4 py-3 text-base font-semibold"
+                    size="lg"
+                    variant="neon"
+                    font="retro"
                     onClick={() => router.push(`/token/${token.address}`)}
+                    className={cn(
+                      "px-6 py-3 text-xs font-medium shadow-lg",
+                      "hover:shadow-xl transition-all duration-300",
+                      "bg-gradient-to-r from-gray-500 to-gray-600",
+                      "hover:from-gray-400 hover:to-gray-500"
+                    )}
                   >
                     Buy
                   </Button>

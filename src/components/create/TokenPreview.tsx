@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/src/components/ui/avatar";
 import { Badge } from "@/src/components/ui/badge";
-import { Button } from "@/src/components/ui/button";
 import { Globe, MessageCircle, Twitter } from "lucide-react";
+import { Button } from "@/src/components/ui/8bit/button";
+import { cn } from "@/src/lib/utils";
+import { eightBitStyles } from "@/src/styles/8bit-styles";
 
 type FormData = {
   name: string;
@@ -39,8 +41,8 @@ export function TokenPreview({
     currentStep === 1 || (!showSuccessMessage && !isCreating);
 
   return (
-    <div className="space-y-4">
-      <div className="bg-[#1a1d2e] rounded-xl p-4 border border-gray-800/50">
+    <div className="space-y-6">
+      <div className="text-white p-6" style={eightBitStyles.previewCard}>
         <h3 className="text-lg font-semibold text-white mb-4">Token Preview</h3>
 
         <div className="flex items-center gap-3 mb-4">
@@ -179,9 +181,17 @@ export function TokenPreview({
       {showLaunchButton && (
         <>
           <Button
+            size="lg"
+            variant="neon"
+            font="retro"
             onClick={handleCreateToken}
             disabled={isCreating || !isFormValid}
-            className="w-full bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 hover:from-purple-600 hover:via-blue-600 hover:to-cyan-500 text-white py-3 text-base font-semibold shadow-lg rounded-xl"
+            className={cn(
+              "w-full px-6 py-3 text-base font-medium shadow-lg",
+              "hover:shadow-xl transition-all duration-300",
+              "bg-emerald-600 text-white hover:bg-emerald-500",
+              "dark:bg-emerald-700 dark:hover:bg-emerald-600"
+            )}
           >
             🚀 Launch Token
           </Button>
@@ -206,7 +216,7 @@ export function TokenPreview({
       )}
 
       {showSuccessMessage && (
-        <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 text-center">
+        <div style={eightBitStyles.previewCard} className="p-4 text-center">
           <div className="text-2xl mb-2">🎉</div>
           <div className="text-green-400 font-bold text-sm mb-1">
             Token Created Successfully!

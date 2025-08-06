@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/src/components/ui/8bit/button";
 import { Input } from "@/src/components/ui/input";
+import { cn } from "@/src/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +12,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { LinkIcon } from "lucide-react";
 import {
   useCollectFees,
   getFeesCollectedFromReceipt,
@@ -132,12 +132,20 @@ export function TokenControls() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row sm:justify-center gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-center gap-4 mb-6 ">
         <Button
-          className="bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 text-white"
+          size="lg"
+          variant="neon"
+          font="retro"
           onClick={() => setIsCollectFeesOpen(true)}
+          className={cn(
+            "px-6 py-3 text-sm font-medium shadow-lg",
+            "mt-10",
+            "hover:shadow-xl transition-all duration-300",
+            "bg-emerald-600 text-white hover:bg-emerald-500",
+            "dark:bg-emerald-700 dark:hover:bg-emerald-600"
+          )}
         >
-          <LinkIcon className="w-4 h-4 mr-2" />
           Collect Fees
         </Button>
       </div>
@@ -192,6 +200,12 @@ export function TokenControls() {
                 }
               }}
               disabled={isProcessing}
+              className={cn(
+                "px-6 py-3 text-sm font-medium shadow-lg",
+                "hover:shadow-xl transition-all duration-300",
+                "bg-emerald-600 text-white hover:bg-emerald-500",
+                "dark:bg-emerald-700 dark:hover:bg-emerald-600"
+              )}
             >
               Cancel
             </Button>

@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/src/components/ui/card";
+import { Card } from "@/src/components/ui/8bit/card";
 import { formatNumber } from "@/src/utils/format";
+import { eightBitStyles } from "@/src/styles/8bit-styles";
 
 type Stats = {
   totalMarketCap: number;
@@ -38,48 +39,61 @@ export function StatsSection() {
   if (!stats) return null;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-      <Card className="bg-gradient-to-r from-pink-400 to-purple-500 text-white border-0 rounded-2xl">
-        <CardContent className="p-4">
-          <div className="text-sm opacity-90">Total Market Cap</div>
-          <div className="text-2xl font-bold">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-16 mb-8 px-12">
+      <Card
+        className="text-white border-0 w-full"
+        style={eightBitStyles.statsCard}
+      >
+        <div className="text-center">
+          <div className="text-xs opacity-90 mb-1">Total Market Cap</div>
+          <div className="text-xs font-bold">
             ${formatNumber(stats.totalMarketCap)}
           </div>
-        </CardContent>
+        </div>
       </Card>
 
-      <Card className="bg-gray-900 border border-gray-800 rounded-2xl">
-        <CardContent className="p-4">
-          <div className="text-sm text-gray-300">Tokens</div>
-          <div className="text-2xl font-bold text-white">{stats.tokens}</div>
-        </CardContent>
+      <Card
+        className="text-white border-0 w-full"
+        style={eightBitStyles.statsCard}
+      >
+        <div className="text-center">
+          <div className="text-xs opacity-90 mb-1">Tokens</div>
+          <div className="text-xs font-bold">{stats.tokens}</div>
+        </div>
       </Card>
 
-      <Card className="bg-gray-900 border border-gray-800 rounded-2xl">
-        <CardContent className="p-4">
-          <div className="text-sm text-gray-300">TVL</div>
-          <div className="text-2xl font-bold text-white">
-            ${formatNumber(stats.tvl)}
-          </div>
-        </CardContent>
+      <Card
+        className="text-white border-0 w-full"
+        style={eightBitStyles.statsCard}
+      >
+        <div className="text-center">
+          <div className="text-xs opacity-90 mb-1">TVL</div>
+          <div className="text-xs font-bold">${formatNumber(stats.tvl)}</div>
+        </div>
       </Card>
 
-      <Card className="bg-gray-900 border border-gray-800 rounded-2xl">
-        <CardContent className="p-4">
-          <div className="text-sm text-gray-300">24h Volume</div>
-          <div className="text-2xl font-bold text-white">
+      <Card
+        className="text-white border-0 w-full"
+        style={eightBitStyles.statsCard}
+      >
+        <div className="text-center">
+          <div className="text-xs opacity-90 mb-1">24h Volume</div>
+          <div className="text-xs font-bold">
             ${formatNumber(stats.volume24h)}
           </div>
-        </CardContent>
+        </div>
       </Card>
 
-      <Card className="bg-gray-900 border border-gray-800 rounded-2xl">
-        <CardContent className="p-4">
-          <div className="text-sm text-gray-300">Creators Rewards</div>
-          <div className="text-2xl font-bold text-white">
+      <Card
+        className="text-white border-0 w-full"
+        style={eightBitStyles.statsCard}
+      >
+        <div className="text-center">
+          <div className="text-xs opacity-90 mb-1">Creators Rewards</div>
+          <div className="text-xs font-bold">
             ${formatNumber(stats.creatorsRewards)}
           </div>
-        </CardContent>
+        </div>
       </Card>
     </div>
   );

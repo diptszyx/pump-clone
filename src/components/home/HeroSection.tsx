@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/src/components/ui/8bit/button";
+import { cn } from "@/src/lib/utils";
 import { useRouter } from "next/navigation";
 
 export function HeroSection() {
@@ -19,8 +20,15 @@ export function HeroSection() {
       <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
         <Button
           size="lg"
+          variant="neon"
+          font="retro"
           onClick={() => router.push("/create")}
-          className="bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 hover:from-purple-600 hover:via-blue-600 hover:to-cyan-500 text-white px-10 py-6 rounded-2xl shadow-lg text-xl font-medium"
+          className={cn(
+            "px-6 py-3 text-sm font-medium shadow-lg",
+            "hover:shadow-xl transition-all duration-300",
+            "bg-emerald-600 text-white hover:bg-emerald-500",
+            "dark:bg-emerald-700 dark:hover:bg-emerald-600"
+          )}
         >
           🚀 Create Token
         </Button>

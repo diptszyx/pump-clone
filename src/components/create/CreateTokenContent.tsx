@@ -21,7 +21,7 @@ export function CreateTokenContent() {
     <div className="max-w-7xl mx-auto px-6 py-4">
       <CreatePageTitle />
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 min-h-[calc(100vh-200px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 min-h-[calc(100vh-200px)]">
         {/* Left Column (Form) */}
         <div className="lg:col-span-3 space-y-4">
           <TokenForm

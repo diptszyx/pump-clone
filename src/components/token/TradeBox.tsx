@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { Button } from "@/src/components/ui/button";
+import Image from "next/image";
+import { Button } from "@/src/components/ui/8bit/button";
 import {
   useBuyToken,
   useSellToken,
@@ -21,6 +22,7 @@ import { swapToasts } from "@/src/components/ui/swap-toast";
 import { getTokenPriceUsd, getEthPriceUsd } from "@/src/utils/tokenPrice";
 import { Token } from "@/src/types/token";
 import { saveTransaction } from "@/src/utils/saveTransaction";
+import { getEightBitInputStyle } from "@/src/styles/8bit-styles";
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debounced, setDebounced] = useState(value);
@@ -39,6 +41,7 @@ export default function TradeBox({ token }: { token: Token }) {
   const [quoteResult, setQuoteResult] = useState<bigint>(0n);
   const [isQuoteLoading, setIsQuoteLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const [showLoadingModal, setShowLoadingModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -98,7 +101,7 @@ export default function TradeBox({ token }: { token: Token }) {
         setIsQuoteLoading(false);
       }
     })();
-  }, [debouncedAmount, mode, token.address]);
+  }, [debouncedAmount, mode, token.address, getQuote]);
 
   const expectedOutput = useMemo(
     () => tokenUtils.weiToEth(quoteResult),
@@ -235,7 +238,30 @@ export default function TradeBox({ token }: { token: Token }) {
 
   return (
     <div className="bg-[#1a1d2e] rounded-2xl p-6 border border-gray-800/50 shadow-lg">
-      <div className="flex mb-6 bg-[#0f111a] rounded-xl p-1">
+      <div className="flex items-center gap-3 mb-6 p-4 bg-[#0f111a] rounded-xl">
+        <div className="relative flex-shrink-0">
+          <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-green-500/50 shadow-lg hover:border-green-400/70 transition-all duration-300 hover:shadow-green-500/20 hover:shadow-xl">
+            <Image
+              src={token.metadata?.image || "/placeholder.png"}
+              alt={token.metadata?.name || "Token"}
+              fill
+              className="object-cover"
+              sizes="48px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-transparent pointer-events-none"></div>
+          </div>
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-bold text-white truncate">
+            {token.metadata?.name || "Unknown Token"}
+          </h3>
+          <p className="text-sm text-gray-400 font-medium">
+            ${token.metadata?.symbol || "TOKEN"}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex mb-6 bg-[#0f111a] rounded-xl p-1 ">
         <button
           className={`flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all ${
             mode === "buy"
@@ -304,18 +330,45 @@ export default function TradeBox({ token }: { token: Token }) {
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className={`w-full p-4 pr-20 rounded-xl bg-[#0f111a] border text-white text-lg font-medium focus:outline-none focus:ring-2 transition-all ${
-              isAmountExceedsLimit
-                ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50"
-                : "border-gray-700/50 focus:ring-blue-500/50 focus:border-blue-500/50"
-            }`}
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
+            style={{
+              ...getEightBitInputStyle(isInputFocused),
+              ...(isAmountExceedsLimit && {
+                boxShadow: `
+                  2px 0 #ef4444,
+                  -2px 0 #ef4444,
+                  0 -2px #ef4444,
+                  0 2px #ef4444,
+                  4px 0 #ef4444,
+                  -4px 0 #ef4444,
+                  0 -4px #ef4444,
+                  0 4px #ef4444,
+                  0 0 0 2px #ef4444
+                `,
+              }),
+            }}
+            className="w-full p-4 pr-20 text-white text-lg font-medium transition-all"
             placeholder="0.0"
             step="0.01"
           />
           <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-            <span className="text-gray-400 text-sm font-medium">
-              {mode === "buy" ? "ETH" : tokenSymbol}
-            </span>
+            <div className="flex items-center gap-2">
+              {mode === "sell" && (
+                <div className="relative w-5 h-5 rounded-full overflow-hidden border border-gray-600 flex-shrink-0">
+                  <Image
+                    src={token.metadata?.image || "/placeholder.png"}
+                    alt={token.metadata?.name || "Token"}
+                    fill
+                    className="object-cover"
+                    sizes="20px"
+                  />
+                </div>
+              )}
+              <span className="text-gray-400 text-sm font-medium">
+                {mode === "buy" ? "ETH" : tokenSymbol}
+              </span>
+            </div>
           </div>
         </div>
         {isAmountExceedsLimit && limitErrorMessage && (
@@ -330,7 +383,10 @@ export default function TradeBox({ token }: { token: Token }) {
           </label>
         </div>
         <div className="relative">
-          <div className="w-full p-4 pr-20 rounded-xl bg-[#0f111a] border border-gray-700/50 text-white text-lg font-medium">
+          <div
+            className="w-full p-4 pr-20 text-white text-lg font-medium"
+            style={getEightBitInputStyle(false)}
+          >
             {isQuoteLoading ? (
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -345,9 +401,22 @@ export default function TradeBox({ token }: { token: Token }) {
             )}
           </div>
           <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-            <span className="text-gray-400 text-sm font-medium">
-              {mode === "buy" ? tokenSymbol : "ETH"}
-            </span>
+            <div className="flex items-center gap-2">
+              {mode === "buy" && (
+                <div className="relative w-5 h-5 rounded-full overflow-hidden border border-gray-600 flex-shrink-0">
+                  <Image
+                    src={token.metadata?.image || "/placeholder.png"}
+                    alt={token.metadata?.name || "Token"}
+                    fill
+                    className="object-cover"
+                    sizes="20px"
+                  />
+                </div>
+              )}
+              <span className="text-gray-400 text-sm font-medium">
+                {mode === "buy" ? tokenSymbol : "ETH"}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -361,7 +430,7 @@ export default function TradeBox({ token }: { token: Token }) {
           isQuoteLoading ||
           isAmountExceedsLimit
         }
-        className={`w-full py-4 rounded-xl text-white font-semibold text-lg transition-all shadow-lg ${
+        className={`w-full py-4 rounded-xl text-white font-semibold text-xs transition-all shadow-lg ${
           mode === "buy"
             ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:from-gray-600 disabled:to-gray-700"
             : "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-600 disabled:to-gray-700"

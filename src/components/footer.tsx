@@ -8,10 +8,10 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-6 py-12 flex justify-center">
           <div className="space-y-4 text-center">
             <div className="flex items-center justify-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 rounded-xl flex items-center justify-center transform rotate-12">
+              <div className="w-10 h-10 bg-gradient-to-r from-green-500 via-emerald-500 to-lime-400 rounded-xl flex items-center justify-center transform rotate-12">
                 <Rocket className="w-6 h-6 text-white transform -rotate-12" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-gradient-to-r from-green-400 via-emerald-400 to-lime-400 bg-clip-text text-transparent">
                 MOON PUMP
               </span>
             </div>
